@@ -1,21 +1,22 @@
 {
-  "name": "typescript-action",
-  "description": "GitHub Actions TypeScript template",
-  "version": "0.0.0",
-  "author": "",
+  "name": "generate-update-manifest",
+  "description": "GitHub action to generate update manifest files for self distributed Firefox addons",
+  "version": "0.0.1",
+  "author": "2zqa",
   "private": true,
-  "homepage": "https://github.com/actions/typescript-action",
+  "homepage": "https://github.com/2zqa/generate-update-manifest",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/2zqa/generate-update-manifest.git"
   },
   "bugs": {
-    "url": "https://github.com/actions/typescript-action/issues"
+    "url": "https://github.com/2zqa/generate-update-manifest/issues"
   },
   "keywords": [
     "actions",
     "node",
-    "setup"
+    "addons",
+    "firefox"
   ],
   "exports": {
     ".": "./dist/index.js"
