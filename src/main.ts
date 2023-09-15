@@ -25,7 +25,8 @@ export async function run(): Promise<void> {
     if (error instanceof Error) core.setFailed(error.message)
   }
 }
-function generateUpdateManifest(
+
+export function generateUpdateManifest(
   releases: GitHubRelease[],
   addonId: string
 ): UpdateManifest {
