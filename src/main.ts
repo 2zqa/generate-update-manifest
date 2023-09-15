@@ -29,5 +29,7 @@ function generateUpdateManifest(
   releases: GitHubRelease[],
   addonId: string
 ): UpdateManifest {
+  core.debug(releases.join(':'))
+  core.debug(addonId)
   throw new Error('Function not implemented.')
 }
