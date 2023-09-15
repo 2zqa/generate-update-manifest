@@ -1,4 +1,4 @@
-export interface GitHubRelease {
+export default interface GitHubRelease {
   url: string
   html_url: string
   assets_url: string

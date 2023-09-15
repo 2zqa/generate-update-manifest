@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
-import { GitHubRelease } from './types/GitHubRelease'
-import { UpdateManifest } from './types/UpdateManifest'
+import GitHubRelease from './types/GitHubRelease'
+import UpdateManifest from './types/UpdateManifest'
 
 /**
  * The main function for the action.

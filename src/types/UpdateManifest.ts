@@ -3,7 +3,7 @@
  *
  * @see {@link https://extensionworkshop.com/documentation/manage/updating-your-extension/#manifest-structure}
  */
-export interface UpdateManifest {
+export default interface UpdateManifest {
   /** An object containing one entry for each add-on to be updated. For each such entry, the name of the property must be the add-on's UUID, and the value must be an object describing the add-on and its updates. */
   addons: Addons
 }
