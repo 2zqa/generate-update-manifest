@@ -1,18 +1,19 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Generate update manifest'
+description: 'GitHub action to generate update manifest files for self distributed Firefox addons'
+author: '2zqa'
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  addon-id:
+    description: 'The ID of the addon to generate the update manifest for'
     required: true
-    default: '1000'
+  github-token:
+    description: 'The GitHub token used to retrieve releases'
+    required: false
+    default: ${{ github.token }}
 
-# Define your outputs here.
 outputs:
-  time:
-    description: 'Your output description here'
+  manifest:
+    description: 'Path to the generated update manifest file'
 
 runs:
   using: node20
