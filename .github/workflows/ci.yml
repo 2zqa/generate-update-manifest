@@ -53,8 +53,8 @@ jobs:
         id: test-action
         uses: ./
         with:
-          milliseconds: 1000
+          addon-id: '{7b4acf72-c67f-4bf3-bc50-4453cd2eece0}'
 
       - name: Print Output
         id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
+        run: echo "${{ steps.test-action.outputs.manifest }}"
