@@ -16,6 +16,11 @@ hoster.
 the extension overview on [addons.mozilla.org](https://addons.mozilla.org/). For
 example: `{f05c7275-f183-4f0a-87ed-e3e61fc9ae0a}`
 
+### `output-file`
+
+The relative path to the generated update manifest file. Defaults to
+`./update.json`
+
 ### `github-token`
 
 GitHub token to retrieve releases with. Defaults to `${{ github.token }}`
