@@ -3,7 +3,6 @@
  */
 
 import * as main from '../src/main'
-import fs from 'fs'
 
 // Mock the action's entrypoint
 const runMock = jest.spyOn(main, 'run').mockImplementation()
