@@ -24,7 +24,7 @@ GitHub token to retrieve releases with. Defaults to `${{ github.token }}`
 
 ### `manifest`
 
-The relative path to the generated update manifest file. For example:
+The relative path to the generated update manifest file. Defaults to
 `./update_manifest.json`
 
 ## Example usage
