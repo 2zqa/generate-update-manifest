@@ -15,14 +15,20 @@ export async function run(): Promise<void> {
     const outputFile = core.getInput('output-file')
     const client = github.getOctokit(token)
 
+    core.info(`Fetching releases...`)
     const releases = await client.request(
       'GET /repos/{owner}/{repo}/releases',
       github.context.repo
     )
+
+    core.info(`Generating manifest...`)
     const manifest = generateUpdateManifest(releases.data, addonId)
-    await fs.writeFile(outputFile, JSON.stringify(manifest, null, 2))
+    const manifestString = JSON.stringify(manifest, null, 2)
+
+    core.debug(`Writing manifest: ${manifestString} to ${outputFile}`)
+    await fs.writeFile(outputFile, manifestString)
     core.setOutput('manifest', outputFile)
-    core.info(`Manifest file written to ${outputFile}`)
+    core.info(`Successfully generated and written manifest`)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
