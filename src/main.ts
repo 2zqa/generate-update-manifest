@@ -12,6 +12,7 @@ export async function run(): Promise<void> {
   try {
     const token = core.getInput('github-token')
     const addonId = core.getInput('addon-id')
+    const outputFile = core.getInput('output-file')
     const client = github.getOctokit(token)
 
     const releases = await client.request(
@@ -19,7 +20,9 @@ export async function run(): Promise<void> {
       github.context.repo
     )
     const manifest = generateUpdateManifest(releases.data, addonId)
-    return fs.writeFile('manifest.json', JSON.stringify(manifest, null, 2))
+    const promise = fs.writeFile(outputFile, JSON.stringify(manifest, null, 2))
+    core.setOutput('manifest', outputFile)
+    core.info(`Manifest file written to ${outputFile}`)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
