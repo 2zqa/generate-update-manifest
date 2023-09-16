@@ -9672,10 +9672,17 @@ async function run() {
     try {
         const token = core.getInput('github-token');
         const addonId = core.getInput('addon-id');
+        const outputFile = core.getInput('output-file');
         const client = github.getOctokit(token);
+        core.info(`Fetching releases...`);
         const releases = await client.request('GET /repos/{owner}/{repo}/releases', github.context.repo);
+        core.info(`Generating manifest...`);
         const manifest = generateUpdateManifest(releases.data, addonId);
-        return fs.writeFile('manifest.json', JSON.stringify(manifest, null, 2));
+        const manifestString = JSON.stringify(manifest, null, 2);
+        core.debug(`Writing manifest: ${manifestString} to ${outputFile}`);
+        await fs.writeFile(outputFile, manifestString);
+        core.setOutput('manifest', outputFile);
+        core.info(`Successfully generated and written manifest`);
     }
     catch (error) {
         // Fail the workflow run if an error occurs
