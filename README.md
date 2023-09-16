@@ -32,5 +32,5 @@ The relative path to the generated update manifest file. For example:
 ```yaml
 uses: 2zqa/generate-update-manifest@v1
 with:
-  addon-id: {{ env.addon_id }}
+  addon-id: ${{ env.ADDON_ID }}
 ```
