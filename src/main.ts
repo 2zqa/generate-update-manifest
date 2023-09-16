@@ -20,7 +20,7 @@ export async function run(): Promise<void> {
       github.context.repo
     )
     const manifest = generateUpdateManifest(releases.data, addonId)
-    const promise = fs.writeFile(outputFile, JSON.stringify(manifest, null, 2))
+    await fs.writeFile(outputFile, JSON.stringify(manifest, null, 2))
     core.setOutput('manifest', outputFile)
     core.info(`Manifest file written to ${outputFile}`)
   } catch (error) {
