@@ -2,6 +2,7 @@
 
 [![GitHub Super-Linter](https://github.com/2zqa/generate-update-manifest/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
 [![Continuous Integration](https://github.com/2zqa/generate-update-manifest/actions/workflows/ci.yml/badge.svg)](https://github.com/2zqa/generate-update-manifest/actions/workflows/ci.yml)
+![Code Coverage](./badges/coverage.svg)
 
 This action generates an update manifest file for self distributed Firefox addons. Recommended to be used with GitHub Pages or any other static file hoster.
 
