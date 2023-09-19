@@ -21,8 +21,8 @@ See also:
 
 ### `output-file`
 
-The relative path to the generated update manifest file. Defaults to
-`./update.json`
+The path to the generated update manifest file. Defaults to
+`./update_manifest.json`
 
 ### `github-token`
 
