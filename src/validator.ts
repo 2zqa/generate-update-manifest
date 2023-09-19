@@ -2,11 +2,17 @@
  * A class representing a validator that can be used to validate input data.
  */
 export default class Validator {
-  // https://stackoverflow.com/a/13653180 plus the addition of the curly braces
+  /**
+   * Matches RFC 4122 UUIDs with curly brackets.
+   */
   public static readonly uuidRegex =
     /^\{[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}\}$/i
 
-  // https://html.spec.whatwg.org/#valid-e-mail-address
+  /**
+   * Matches e-mail addresses according to the HTML spec.
+   *
+   * @see {@link https://html.spec.whatwg.org/#valid-e-mail-address}
+   */
   public static readonly emailRegex =
     /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
