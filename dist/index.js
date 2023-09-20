@@ -9663,7 +9663,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.generateUpdateManifest = exports.validateAddonID = exports.run = void 0;
+exports.generateUpdateManifest = exports.validateRepository = exports.validateAddonID = exports.run = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const fs = __importStar(__nccwpck_require__(3977));
@@ -9677,18 +9677,22 @@ async function run() {
         const token = core.getInput('github-token');
         const addonID = core.getInput('addon-id');
         const outputFile = core.getInput('output-file');
+        const repository = core.getInput('repository');
         const client = github.getOctokit(token);
         // Validate inputs
         const validator = new validator_1.default();
         validator.check(!!addonID, 'addon-id', 'The addon ID is required');
         validator.check(!!outputFile, 'output-file', 'The output file is required');
         validator.check(!!token, 'github-token', 'The GitHub token is required');
+        validator.check(!!token, 'repository', 'The repository is required');
+        validateRepository(validator, repository);
         validateAddonID(validator, addonID);
         if (!validator.isValid()) {
             throw new Error(validator.toJSON());
         }
         core.info(`Fetching releases...`);
-        const releases = await client.request('GET /repos/{owner}/{repo}/releases', github.context.repo);
+        const [owner, repo] = repository.split('/');
+        const releases = await client.request('GET /repos/{owner}/{repo}/releases', { owner, repo });
         core.info(`Generating manifest...`);
         const manifest = generateUpdateManifest(releases.data, addonID);
         const manifestString = JSON.stringify(manifest, null, 2);
@@ -9716,6 +9720,10 @@ function validateAddonID(validator, addonId) {
     validator.check(isValidEmail || isValidUuid, 'addon-id', `The addon ID is neither a valid e-mail nor a valid UUID`);
 }
 exports.validateAddonID = validateAddonID;
+function validateRepository(validator, repository) {
+    validator.check(repository.split('/').length === 2, 'repository', `The repository must be in the format owner/repo`);
+}
+exports.validateRepository = validateRepository;
 function generateUpdateManifest(releases, addonId) {
     const mappedUpdates = releases.map(release => ({
         version: release.tag_name,
