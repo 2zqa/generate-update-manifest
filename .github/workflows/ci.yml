@@ -57,4 +57,4 @@ jobs:
 
       - name: Print Output
         id: output
-        run: echo "${{ steps.test-action.outputs.manifest }}"
+        run: cat "${{ steps.test-action.outputs.manifest }}"
