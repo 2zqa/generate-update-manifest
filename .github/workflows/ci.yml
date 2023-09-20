@@ -54,6 +54,7 @@ jobs:
         uses: ./
         with:
           addon-id: '{7b4acf72-c67f-4bf3-bc50-4453cd2eece0}'
+          repository: 'gorhill/uBlock'
 
       - name: Print Output
         id: output
