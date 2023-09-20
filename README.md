@@ -12,12 +12,11 @@ hoster.
 
 ### `addon-id`
 
-**Required** The ID of the addon. Can be found under the technical details
-section in the extension overview on https://addons.mozilla.org. For example:
+**Required** The
+[ID of the addon](https://extensionworkshop.com/documentation/develop/extensions-and-the-add-on-id/).
+Can be found under the technical details section in the extension overview on
+https://addons.mozilla.org. For example:
 `{f05c7275-f183-4f0a-87ed-e3e61fc9ae0a}` or `uBlock0@raymondhill.net`
-
-See also:
-[extensionworkshop.com/documentation/develop/extensions-and-the-add-on-id/](https://extensionworkshop.com/documentation/develop/extensions-and-the-add-on-id/)
 
 ### `output-file`
 
@@ -41,3 +40,12 @@ uses: 2zqa/generate-update-manifest@v1
 with:
   addon-id: ${{ env.ADDON_ID }}
 ```
+
+## Acknowledgements
+
+This action would not be possible without the following resources:
+
+- https://github.com/actions/typescript-action - Template this action is based
+  on
+- https://extensionworkshop.com/documentation/manage/updating-your-extension/#manifest-structure -
+  Update manifest documentation
