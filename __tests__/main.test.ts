@@ -5,13 +5,13 @@ import * as main from '../src/main'
 import * as fs from 'node:fs/promises'
 import Validator from '../src/validator'
 
-const addonID = '{692884b1-e357-4adb-9e3c-f4a3d74bb38b}'
+const addonIDRegex = '{692884b1-e357-4adb-9e3c-f4a3d74bb38b}'
 
 describe('generateUpdateManifest', () => {
   it('returns a manifest with an empty updates list', () => {
-    expect(main.generateUpdateManifest([], addonID)).toEqual({
+    expect(main.generateUpdateManifest([], addonIDRegex)).toEqual({
       addons: {
-        [addonID]: {
+        [addonIDRegex]: {
           updates: []
         }
       }
@@ -32,7 +32,7 @@ describe('generateUpdateManifest', () => {
     const expected = JSON.parse(expectedJson.toString())
     const releases = JSON.parse(mockedResponse.toString())
 
-    const manifest = main.generateUpdateManifest(releases, addonID)
+    const manifest = main.generateUpdateManifest(releases, addonIDRegex)
 
     expect(manifest).toEqual(expected)
   })
