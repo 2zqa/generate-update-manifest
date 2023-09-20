@@ -9659,11 +9659,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.generateUpdateManifest = exports.run = void 0;
+exports.generateUpdateManifest = exports.validateAddonID = exports.run = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const fs = __importStar(__nccwpck_require__(3977));
+const validator_1 = __importDefault(__nccwpck_require__(4630));
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
@@ -9671,16 +9675,31 @@ const fs = __importStar(__nccwpck_require__(3977));
 async function run() {
     try {
         const token = core.getInput('github-token');
-        const addonId = core.getInput('addon-id');
+        const addonID = core.getInput('addon-id');
         const outputFile = core.getInput('output-file');
         const client = github.getOctokit(token);
+        // Validate inputs
+        const validator = new validator_1.default();
+        validator.check(!!addonID, 'addon-id', 'The addon ID is required');
+        validator.check(!!outputFile, 'output-file', 'The output file is required');
+        validator.check(!!token, 'github-token', 'The GitHub token is required');
+        validateAddonID(validator, addonID);
+        if (!validator.isValid()) {
+            throw new Error(validator.toJSON());
+        }
         core.info(`Fetching releases...`);
         const releases = await client.request('GET /repos/{owner}/{repo}/releases', github.context.repo);
         core.info(`Generating manifest...`);
-        const manifest = generateUpdateManifest(releases.data, addonId);
+        const manifest = generateUpdateManifest(releases.data, addonID);
         const manifestString = JSON.stringify(manifest, null, 2);
         core.debug(`Writing manifest: ${manifestString} to ${outputFile}`);
-        await fs.writeFile(outputFile, manifestString);
+        try {
+            await fs.writeFile(outputFile, manifestString);
+        }
+        catch (err) {
+            validator.addError('output-file', `${outputFile} is not writable: ${err}`);
+            core.setFailed(validator.toJSON());
+        }
         core.setOutput('manifest', outputFile);
         core.info(`Successfully generated and written manifest`);
     }
@@ -9691,6 +9710,12 @@ async function run() {
     }
 }
 exports.run = run;
+function validateAddonID(validator, addonId) {
+    const isValidEmail = addonId.match(validator_1.default.emailRegex) !== null;
+    const isValidUuid = addonId.match(validator_1.default.uuidRegex) !== null;
+    validator.check(isValidEmail || isValidUuid, 'addon-id', `The addon ID is neither a valid e-mail nor a valid UUID`);
+}
+exports.validateAddonID = validateAddonID;
 function generateUpdateManifest(releases, addonId) {
     const mappedUpdates = releases.map(release => ({
         version: release.tag_name,
@@ -9705,6 +9730,80 @@ function generateUpdateManifest(releases, addonId) {
     };
 }
 exports.generateUpdateManifest = generateUpdateManifest;
+
+
+/***/ }),
+
+/***/ 4630:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+/**
+ * A class representing a validator that can be used to validate input data.
+ */
+class Validator {
+    /**
+     * Matches RFC 4122 UUIDs with curly brackets.
+     */
+    static uuidRegex = /^\{[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}\}$/i;
+    /**
+     * Matches e-mail addresses according to the HTML spec.
+     *
+     * @see {@link https://html.spec.whatwg.org/#valid-e-mail-address}
+     */
+    static emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    _errors;
+    constructor() {
+        this._errors = new Map();
+    }
+    /**
+     * Returns a readonly map of the errors.
+     * @see https://stackoverflow.com/q/50046573
+     */
+    get errors() {
+        // Note that ReadonlyMap doesn't prevent writing during runtime, only
+        // during compile time.
+        return this._errors;
+    }
+    /**
+     * Returns a JSON representation of the errors.
+     * @returns A string representing the JSON object of errors.
+     */
+    toJSON() {
+        return JSON.stringify(Object.fromEntries(this._errors), null, 2);
+    }
+    /**
+     * Returns true if the errors map doesn't contain any entries.
+     */
+    isValid() {
+        return this._errors.size === 0;
+    }
+    /**
+     * Adds an error message to the map (so long as no entry already exists for
+     * the given key).
+     * @param inputName - The name of the input that caused the error.
+     * @param message - The error message.
+     */
+    addError(inputName, message) {
+        if (!this._errors.has(inputName)) {
+            this._errors.set(inputName, message);
+        }
+    }
+    /**
+     * Stores an error message if the isValid check is not valid.
+     * @param isValid - A boolean indicating if the check is valid.
+     * @param key - The name of the input that caused the error.
+     * @param message - The error message that's added if the check is not valid.
+     */
+    check(isValid, key, message) {
+        if (!isValid) {
+            this.addError(key, message);
+        }
+    }
+}
+exports["default"] = Validator;
 
 
 /***/ }),
