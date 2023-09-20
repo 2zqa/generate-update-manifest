@@ -37,26 +37,22 @@ export async function run(): Promise<void> {
     const manifestString = JSON.stringify(manifest, null, 2)
 
     core.debug(`Writing manifest: ${manifestString} to ${outputFile}`)
-    return fs
-      .writeFile(outputFile, manifestString)
-      .catch(err => {
-        validator.addError(
-          'output-file',
-          `${outputFile} is not writable`
-        )
-        core.setFailed(validator.toJSON())
-      })
-      .then(() => {
-        core.setOutput('manifest', outputFile)
-        core.info(`Successfully generated and written manifest`)
-      })
+    try {
+      await fs.writeFile(outputFile, manifestString)
+    } catch (err) {
+      validator.addError('output-file', `${outputFile} is not writable: ${err}`)
+      core.setFailed(validator.toJSON())
+    }
+
+    core.setOutput('manifest', outputFile)
+    core.info(`Successfully generated and written manifest`)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
   }
 }
 
-export function validateAddonID(validator: Validator, addonId: string) {
+export function validateAddonID(validator: Validator, addonId: string): void {
   const isValidEmail = addonId.match(Validator.emailRegex) !== null
   const isValidUuid = addonId.match(Validator.uuidRegex) !== null
   validator.check(

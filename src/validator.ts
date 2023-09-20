@@ -5,16 +5,15 @@ export default class Validator {
   /**
    * Matches RFC 4122 UUIDs with curly brackets.
    */
-  public static readonly uuidRegex =
-    /^\{[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}\}$/i
+  static readonly uuidRegex = /^\{[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}\}$/i
 
   /**
    * Matches e-mail addresses according to the HTML spec.
    *
    * @see {@link https://html.spec.whatwg.org/#valid-e-mail-address}
    */
-  public static readonly emailRegex =
-    /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+  static readonly emailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
 
   private _errors: Map<string, string>
 
@@ -36,14 +35,14 @@ export default class Validator {
    * Returns a JSON representation of the errors.
    * @returns A string representing the JSON object of errors.
    */
-  public toJSON(): string {
+  toJSON(): string {
     return JSON.stringify(Object.fromEntries(this._errors), null, 2)
   }
 
   /**
    * Returns true if the errors map doesn't contain any entries.
    */
-  public isValid(): boolean {
+  isValid(): boolean {
     return this._errors.size === 0
   }
 
@@ -53,7 +52,7 @@ export default class Validator {
    * @param inputName - The name of the input that caused the error.
    * @param message - The error message.
    */
-  public addError(inputName: string, message: string): void {
+  addError(inputName: string, message: string): void {
     if (!this._errors.has(inputName)) {
       this._errors.set(inputName, message)
     }
@@ -65,7 +64,7 @@ export default class Validator {
    * @param key - The name of the input that caused the error.
    * @param message - The error message that's added if the check is not valid.
    */
-  public check(isValid: boolean, key: string, message: string): void {
+  check(isValid: boolean, key: string, message: string): void {
     if (!isValid) {
       this.addError(key, message)
     }
