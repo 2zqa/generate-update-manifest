@@ -66,7 +66,10 @@ export function validateAddonID(validator: Validator, addonId: string): void {
   )
 }
 
-export function validateRepository(validator: Validator, repository: string) {
+export function validateRepository(
+  validator: Validator,
+  repository: string
+): void {
   validator.check(
     repository.split('/').length === 2,
     'repository',
