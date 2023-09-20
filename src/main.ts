@@ -14,6 +14,7 @@ export async function run(): Promise<void> {
     const token = core.getInput('github-token')
     const addonID = core.getInput('addon-id')
     const outputFile = core.getInput('output-file')
+    const repository = core.getInput('repository')
     const client = github.getOctokit(token)
 
     // Validate inputs
@@ -21,15 +22,18 @@ export async function run(): Promise<void> {
     validator.check(!!addonID, 'addon-id', 'The addon ID is required')
     validator.check(!!outputFile, 'output-file', 'The output file is required')
     validator.check(!!token, 'github-token', 'The GitHub token is required')
+    validator.check(!!token, 'repository', 'The repository is required')
+    validateRepository(validator, repository)
     validateAddonID(validator, addonID)
     if (!validator.isValid()) {
       throw new Error(validator.toJSON())
     }
 
     core.info(`Fetching releases...`)
+    const [owner, repo] = repository.split('/')
     const releases = await client.request(
       'GET /repos/{owner}/{repo}/releases',
-      github.context.repo
+      { owner, repo }
     )
 
     core.info(`Generating manifest...`)
@@ -59,6 +63,14 @@ export function validateAddonID(validator: Validator, addonId: string): void {
     isValidEmail || isValidUuid,
     'addon-id',
     `The addon ID is neither a valid e-mail nor a valid UUID`
+  )
+}
+
+export function validateRepository(validator: Validator, repository: string) {
+  validator.check(
+    repository.split('/').length === 2,
+    'repository',
+    `The repository must be in the format owner/repo`
   )
 }
 

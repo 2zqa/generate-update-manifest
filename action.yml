@@ -16,6 +16,10 @@ inputs:
     description: 'The GitHub token used to retrieve releases'
     required: false
     default: ${{ github.token }}
+  repository:
+    description: 'The repository to retrieve releases from'
+    required: false
+    default: ${{ github.repository }}
 
 outputs:
   manifest:

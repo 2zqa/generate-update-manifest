@@ -61,3 +61,22 @@ describe('validateAddonID', () => {
     expect(validator.isValid()).toBe(false)
   })
 })
+
+describe('validateRepository', () => {
+  let validator: Validator
+  beforeEach(() => {
+    validator = new Validator()
+  })
+
+  it('does not add an error for a valid repository', () => {
+    const validator = new Validator()
+    main.validateRepository(validator, 'owner/repo')
+    expect(validator.isValid()).toBe(true)
+  })
+
+  it('adds an error for a malformed repo', () => {
+    const validator = new Validator()
+    main.validateRepository(validator, 'owner/repoowner/repo')
+    expect(validator.isValid()).toBe(false)
+  })
+})
