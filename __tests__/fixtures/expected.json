@@ -3,24 +3,16 @@
     "{692884b1-e357-4adb-9e3c-f4a3d74bb38b}": {
       "updates": [
         {
-          "version": "v1.5",
-          "update_link": "https://github.com/2zqa/AnnoyanceFix/releases/download/v1.5/AnnoyanceFix.zip"
+          "update_link": "https://github.com/gorhill/uBlock/releases/download/1.52.1b4/uBlock0_1.52.1b4.chromium.zip",
+          "version": "1.52.1b4"
         },
         {
-          "version": "v1.4",
-          "update_link": "https://github.com/2zqa/AnnoyanceFix/releases/download/v1.4/AnnoyanceFix.zip"
+          "update_link": "https://github.com/gorhill/uBlock/releases/download/1.52.1b3/uBlock0_1.52.1b3.chromium.zip",
+          "version": "1.52.1b3"
         },
         {
-          "version": "v1.3",
-          "update_link": "https://github.com/2zqa/AnnoyanceFix/releases/download/v1.3/AnnoyanceFix.zip"
-        },
-        {
-          "version": "v1.2",
-          "update_link": "https://github.com/2zqa/AnnoyanceFix/releases/download/v1.2/AnnoyanceFix.zip"
-        },
-        {
-          "version": "v1.1",
-          "update_link": "https://github.com/2zqa/AnnoyanceFix/releases/download/v1.1/AnnoyanceFix.zip"
+          "update_link": "https://github.com/gorhill/uBlock/releases/download/1.52.1b2/uBlock0_1.52.1b2.chromium.zip",
+          "version": "1.52.1b2"
         }
       ]
     }

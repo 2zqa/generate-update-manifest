@@ -1,0 +1,20 @@
+{
+  "addons": {
+    "{692884b1-e357-4adb-9e3c-f4a3d74bb38b}": {
+      "updates": [
+        {
+          "update_link": "https://github.com/gorhill/uBlock/releases/download/1.52.1b4/uBlock0_1.52.1b4.firefox.signed.xpi",
+          "version": "1.52.1b4"
+        },
+        {
+          "update_link": "https://github.com/gorhill/uBlock/releases/download/1.52.1b3/uBlock0_1.52.1b3.firefox.signed.xpi",
+          "version": "1.52.1b3"
+        },
+        {
+          "update_link": "https://github.com/gorhill/uBlock/releases/download/1.52.1b2/uBlock0_1.52.1b2.firefox.signed.xpi",
+          "version": "1.52.1b2"
+        }
+      ]
+    }
+  }
+}

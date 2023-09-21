@@ -10,7 +10,7 @@ const addonIDEmail = 'uBlock0@raymondhill.net'
 
 describe('generateUpdateManifest', () => {
   it('returns a manifest with an empty updates list', () => {
-    expect(main.generateUpdateManifest([], addonIDRegex)).toEqual({
+    expect(main.generateUpdateManifest([], addonIDRegex, '')).toEqual({
       addons: {
         [addonIDRegex]: {
           updates: []
@@ -33,9 +33,51 @@ describe('generateUpdateManifest', () => {
     const expected = JSON.parse(expectedJson.toString())
     const releases = JSON.parse(mockedResponse.toString())
 
-    const manifest = main.generateUpdateManifest(releases, addonIDRegex)
+    const manifest = main.generateUpdateManifest(releases, addonIDRegex, '')
 
     expect(manifest).toEqual(expected)
+  })
+
+  it('filters assets', async () => {
+    const expectedJsonPromise = fs.readFile(
+      './__tests__/fixtures/expected-filtered.json'
+    )
+    const mockedResponsePromise = fs.readFile(
+      './__tests__/fixtures/releases.json'
+    )
+    const [expectedJson, mockedResponse] = await Promise.all([
+      expectedJsonPromise,
+      mockedResponsePromise
+    ])
+    const expected = JSON.parse(expectedJson.toString())
+    const releases = JSON.parse(mockedResponse.toString())
+
+    const manifest = main.generateUpdateManifest(
+      releases,
+      addonIDRegex,
+      '\\.firefox\\.signed.*'
+    )
+
+    expect(manifest).toEqual(expected)
+  })
+
+  it('skips releases without assets', async () => {
+    const releasesJson = await fs.readFile('./__tests__/fixtures/releases.json')
+    const releases = JSON.parse(releasesJson.toString())
+
+    expect(
+      main.generateUpdateManifest(
+        releases,
+        addonIDRegex,
+        'filter-that-matches-nothing'
+      )
+    ).toEqual({
+      addons: {
+        [addonIDRegex]: {
+          updates: []
+        }
+      }
+    })
   })
 })
 
