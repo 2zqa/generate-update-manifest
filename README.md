@@ -16,22 +16,23 @@ hoster.
 [ID of the addon](https://extensionworkshop.com/documentation/develop/extensions-and-the-add-on-id/).
 Can be found under the technical details section in the extension overview on
 https://addons.mozilla.org. For example:
-`{f05c7275-f183-4f0a-87ed-e3e61fc9ae0a}` or `uBlock0@raymondhill.net`
+`{f05c7275-f183-4f0a-87ed-e3e61fc9ae0a}` or `uBlock0@raymondhill.net`.
 
 ### `output-file`
 
 The path to the generated update manifest file. Defaults to
-`./update_manifest.json`
+`./update_manifest.json`.
 
 ### `github-token`
 
-GitHub token to retrieve releases with. Defaults to `${{ github.token }}`
+GitHub token to retrieve releases with. Defaults to `${{ github.token }}`.
 
 ## Outputs
 
 ### `manifest`
 
-The relative path to the generated update manifest file.
+The path to the generated update manifest file. Equal to the input
+`output-file`.
 
 ## Example usage
 
@@ -41,11 +42,13 @@ with:
   addon-id: ${{ env.ADDON_ID }}
 ```
 
-## Acknowledgements
+## License
 
-This action would not be possible without the following resources:
+This project is licensed under the [MIT License](LICENSE).
 
-- https://github.com/actions/typescript-action - Template this action is based
-  on
-- https://extensionworkshop.com/documentation/manage/updating-your-extension/#manifest-structure -
-  Update manifest documentation
+## Further reading
+
+- How to enable and test updates for your extension:
+  https://extensionworkshop.com/documentation/manage/updating-your-extension/
+- Example GitHub repository template that uses this action:
+  https://github.com/2zqa/startpagina
