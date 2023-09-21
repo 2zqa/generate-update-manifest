@@ -38,7 +38,7 @@ export async function run(): Promise<void> {
     )
 
     core.info(`Generating manifest...`)
-    const manifest = generateUpdateManifest(releases.data, addonID)
+    const manifest = generateUpdateManifest(releases.data, addonID, assetFilter)
     const manifestString = JSON.stringify(manifest, null, 2)
 
     core.debug(`Writing manifest: ${manifestString} to ${outputFile}`)
@@ -80,17 +80,42 @@ export function validateRepository(
 
 export function generateUpdateManifest(
   releases: GitHubRelease[],
-  addonId: string
+  addonId: string,
+  assetFilter: string
 ): UpdateManifest {
-  const mappedUpdates: Update[] = releases.map(release => ({
-    version: release.tag_name,
-    update_link: release.assets[0]?.browser_download_url
-  }))
+  const updates: Update[] = []
+  for (const release of releases) {
+    let assets = release.assets
+    if (assetFilter) {
+      assets = assets.filter(asset => asset.name.match(assetFilter) !== null)
+    }
+
+    // Check if there are any assets left after filtering
+    if (assets.length === 0) {
+      let warningText = `No assets found for release ${release.tag_name}.`
+      if (assetFilter) {
+        warningText.concat(` Filter used: ${assetFilter}`)
+      }
+      core.warning(warningText)
+      break
+    }
+
+    if (assets.length > 1) {
+      core.warning(
+        `Found ${assets.length} for release ${release.tag_name}. Using the first asset.`
+      )
+    }
+
+    updates.push({
+      version: release.tag_name,
+      update_link: assets[0].browser_download_url
+    })
+  }
 
   return {
     addons: {
       [addonId]: {
-        updates: mappedUpdates
+        updates
       }
     }
   }
