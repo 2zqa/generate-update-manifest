@@ -97,7 +97,7 @@ export function generateUpdateManifest(
         warningText = warningText.concat(` Filter used: ${assetFilter}`)
       }
       core.warning(warningText)
-      break
+      continue
     }
 
     if (assets.length > 1) {
