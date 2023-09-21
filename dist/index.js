@@ -9678,6 +9678,7 @@ async function run() {
         const addonID = core.getInput('addon-id');
         const outputFile = core.getInput('output-file');
         const repository = core.getInput('repository');
+        const assetFilter = core.getInput('asset-filter');
         const client = github.getOctokit(token);
         // Validate inputs
         const validator = new validator_1.default();
@@ -9694,7 +9695,7 @@ async function run() {
         const [owner, repo] = repository.split('/');
         const releases = await client.request('GET /repos/{owner}/{repo}/releases', { owner, repo });
         core.info(`Generating manifest...`);
-        const manifest = generateUpdateManifest(releases.data, addonID);
+        const manifest = generateUpdateManifest(releases.data, addonID, assetFilter);
         const manifestString = JSON.stringify(manifest, null, 2);
         core.debug(`Writing manifest: ${manifestString} to ${outputFile}`);
         try {
@@ -9724,15 +9725,39 @@ function validateRepository(validator, repository) {
     validator.check(repository.split('/').length === 2, 'repository', `The repository must be in the format owner/repo`);
 }
 exports.validateRepository = validateRepository;
-function generateUpdateManifest(releases, addonId) {
-    const mappedUpdates = releases.map(release => ({
-        version: release.tag_name,
-        update_link: release.assets[0]?.browser_download_url
-    }));
+function generateUpdateManifest(releases, addonId, assetFilter) {
+    const updates = [];
+    for (const release of releases) {
+        let assets = release.assets;
+        if (assetFilter) {
+            assets = assets.filter(asset => asset.name.match(assetFilter) !== null);
+        }
+        // Check if there are any assets left after filtering
+        if (assets.length === 0) {
+            let warningText = `No assets found for release ${release.tag_name}.`;
+            if (assetFilter) {
+                warningText = warningText.concat(` Filter used: ${assetFilter}`);
+            }
+            core.warning(warningText);
+            break;
+        }
+        if (assets.length > 1) {
+            core.warning(`Found ${assets.length} for release ${release.tag_name}. Using the first asset.`);
+        }
+        // Remove the leading 'v' from the version if it exists
+        let version = release.tag_name;
+        if (release.tag_name.startsWith('v')) {
+            version = release.tag_name.substring(1);
+        }
+        updates.push({
+            version,
+            update_link: assets[0].browser_download_url
+        });
+    }
     return {
         addons: {
             [addonId]: {
-                updates: mappedUpdates
+                updates
             }
         }
     };
