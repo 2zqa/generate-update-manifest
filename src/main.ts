@@ -102,7 +102,7 @@ export function generateUpdateManifest(
 
     if (assets.length > 1) {
       core.warning(
-        `Found ${assets.length} for release ${release.tag_name}. Using the first asset.`
+        `Found ${assets.length} assets for release ${release.tag_name}. Using the first asset.`
       )
     }
 
