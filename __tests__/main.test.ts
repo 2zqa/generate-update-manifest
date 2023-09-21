@@ -79,6 +79,25 @@ describe('generateUpdateManifest', () => {
       }
     })
   })
+
+  it("removes 'v' from tags", async () => {
+    const expectedJsonPromise = fs.readFile(
+      "./__tests__/fixtures/expected-without-v-tags.json"
+    );
+    const mockedResponsePromise = fs.readFile(
+      "./__tests__/fixtures/releases-with-v-tags.json"
+    );
+    const [expectedJson, mockedResponse] = await Promise.all([
+      expectedJsonPromise,
+      mockedResponsePromise,
+    ]);
+    const expected = JSON.parse(expectedJson.toString());
+    const releases = JSON.parse(mockedResponse.toString());
+
+    const manifest = main.generateUpdateManifest(releases, addonIDRegex, "");
+
+    expect(manifest).toEqual(expected);
+  });
 })
 
 describe('validateAddonID', () => {

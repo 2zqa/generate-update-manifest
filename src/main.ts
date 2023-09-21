@@ -106,8 +106,14 @@ export function generateUpdateManifest(
       )
     }
 
+    // Remove the leading 'v' from the version if it exists
+    let version = release.tag_name
+    if (release.tag_name.startsWith('v')) {
+      version = release.tag_name.substring(1)
+    }
+
     updates.push({
-      version: release.tag_name,
+      version,
       update_link: assets[0].browser_download_url
     })
   }
