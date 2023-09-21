@@ -9697,7 +9697,6 @@ async function run() {
         core.info(`Generating manifest...`);
         const manifest = generateUpdateManifest(releases.data, addonID, assetFilter);
         const manifestString = JSON.stringify(manifest, null, 2);
-        core.debug(`Writing manifest: ${manifestString} to ${outputFile}`);
         try {
             await fs.writeFile(outputFile, manifestString);
         }
@@ -9706,7 +9705,7 @@ async function run() {
             core.setFailed(validator.toJSON());
         }
         core.setOutput('manifest', outputFile);
-        core.info(`Successfully generated and written manifest`);
+        core.info(`Successfully generated and written to ${outputFile}`);
     }
     catch (error) {
         // Fail the workflow run if an error occurs
@@ -9739,10 +9738,10 @@ function generateUpdateManifest(releases, addonId, assetFilter) {
                 warningText = warningText.concat(` Filter used: ${assetFilter}`);
             }
             core.warning(warningText);
-            break;
+            continue;
         }
         if (assets.length > 1) {
-            core.warning(`Found ${assets.length} for release ${release.tag_name}. Using the first asset.`);
+            core.warning(`Found ${assets.length} assets for release ${release.tag_name}. Using the first asset.`);
         }
         // Remove the leading 'v' from the version if it exists
         let version = release.tag_name;
