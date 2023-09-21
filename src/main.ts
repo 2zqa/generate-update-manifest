@@ -94,7 +94,7 @@ export function generateUpdateManifest(
     if (assets.length === 0) {
       let warningText = `No assets found for release ${release.tag_name}.`
       if (assetFilter) {
-        warningText.concat(` Filter used: ${assetFilter}`)
+        warningText = warningText.concat(` Filter used: ${assetFilter}`)
       }
       core.warning(warningText)
       break
