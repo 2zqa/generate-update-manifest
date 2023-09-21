@@ -41,7 +41,6 @@ export async function run(): Promise<void> {
     const manifest = generateUpdateManifest(releases.data, addonID, assetFilter)
     const manifestString = JSON.stringify(manifest, null, 2)
 
-    core.debug(`Writing manifest: ${manifestString} to ${outputFile}`)
     try {
       await fs.writeFile(outputFile, manifestString)
     } catch (err) {
@@ -50,7 +49,7 @@ export async function run(): Promise<void> {
     }
 
     core.setOutput('manifest', outputFile)
-    core.info(`Successfully generated and written manifest`)
+    core.info(`Successfully generated and written to ${outputFile}`)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
