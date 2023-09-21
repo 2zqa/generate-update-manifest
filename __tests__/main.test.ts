@@ -9,7 +9,7 @@ const addonIDRegex = '{692884b1-e357-4adb-9e3c-f4a3d74bb38b}'
 const addonIDEmail = 'uBlock0@raymondhill.net'
 
 describe('generateUpdateManifest', () => {
-  it('returns a manifest with an empty updates list', () => {
+  it('returns a manifest with an empty updates list when no releases are provided', () => {
     expect(main.generateUpdateManifest([], addonIDRegex, '')).toEqual({
       addons: {
         [addonIDRegex]: {
