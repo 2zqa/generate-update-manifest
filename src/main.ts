@@ -15,6 +15,7 @@ export async function run(): Promise<void> {
     const addonID = core.getInput('addon-id')
     const outputFile = core.getInput('output-file')
     const repository = core.getInput('repository')
+    const assetFilter = core.getInput('asset-filter')
     const client = github.getOctokit(token)
 
     // Validate inputs

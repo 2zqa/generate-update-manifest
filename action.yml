@@ -20,6 +20,9 @@ inputs:
     description: 'The repository to retrieve releases from'
     required: false
     default: ${{ github.repository }}
+  asset-filter:
+    description: 'Regex pattern to filter release assets'
+    required: false
 
 outputs:
   manifest:
