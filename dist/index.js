@@ -9728,8 +9728,12 @@ function generateUpdateManifest(releases, addonId, assetFilter) {
     const updates = [];
     for (const release of releases) {
         let assets = release.assets;
+        core.debug(`Found ${assets.length} assets for release ${release.tag_name}:\n${assets
+            .map(asset => `- ${asset.name}`)
+            .join('\n')}`);
         if (assetFilter) {
             assets = assets.filter(asset => asset.name.match(assetFilter) !== null);
+            core.debug(`Retained ${assets.length} assets after filtering`);
         }
         // Check if there are any assets left after filtering
         if (assets.length === 0) {

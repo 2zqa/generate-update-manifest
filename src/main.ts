@@ -86,8 +86,9 @@ export function generateUpdateManifest(
   for (const release of releases) {
     let assets = release.assets
     core.debug(
-      `Found ${assets.length} assets for release ${release.tag_name}:\n` +
-        assets.map(asset => `- ${asset.name}`).join('\n')
+      `Found ${assets.length} assets for release ${release.tag_name}:\n${assets
+        .map(asset => `- ${asset.name}`)
+        .join('\n')}`
     )
 
     if (assetFilter) {
