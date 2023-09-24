@@ -21,7 +21,7 @@ https://addons.mozilla.org. For example:
 ### `output-file`
 
 The path to the generated update manifest file. Defaults to
-`./update_manifest.json`.
+`./updates.json`.
 
 ### `github-token`
 
