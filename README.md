@@ -20,8 +20,7 @@ https://addons.mozilla.org. For example:
 
 ### `output-file`
 
-The path to the generated update manifest file. Defaults to
-`./updates.json`.
+The path to the generated update manifest file. Defaults to `./updates.json`.
 
 ### `github-token`
 
@@ -50,5 +49,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 - How to enable and test updates for your extension:
   https://extensionworkshop.com/documentation/manage/updating-your-extension/
-- Example GitHub repository template that uses this action:
+- Example GitHub template repository that uses this action:
   https://github.com/2zqa/startpagina
