@@ -57,8 +57,8 @@ export async function run(): Promise<void> {
 }
 
 export function validateAddonID(validator: Validator, addonId: string): void {
-  const isValidEmail = addonId.match(Validator.emailRegex) !== null
-  const isValidUuid = addonId.match(Validator.uuidRegex) !== null
+  const isValidEmail = Validator.emailRegex.test(addonId)
+  const isValidUuid = Validator.uuidRegex.test(addonId)
   validator.check(
     isValidEmail || isValidUuid,
     'addon-id',
