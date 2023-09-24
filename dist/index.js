@@ -9715,13 +9715,13 @@ async function run() {
 }
 exports.run = run;
 function validateAddonID(validator, addonId) {
-    const isValidEmail = addonId.match(validator_1.default.emailRegex) !== null;
-    const isValidUuid = addonId.match(validator_1.default.uuidRegex) !== null;
-    validator.check(isValidEmail || isValidUuid, 'addon-id', `The addon ID is neither a valid e-mail nor a valid UUID`);
+    const isValidEmail = validator_1.default.emailRegex.test(addonId);
+    const isValidUuid = validator_1.default.uuidRegex.test(addonId);
+    validator.check(isValidEmail || isValidUuid, 'addon-id', 'The addon ID is neither a valid e-mail nor a valid UUID');
 }
 exports.validateAddonID = validateAddonID;
 function validateRepository(validator, repository) {
-    validator.check(repository.split('/').length === 2, 'repository', `The repository must be in the format owner/repo`);
+    validator.check(repository.split('/').length === 2, 'repository', 'The repository must be in the format owner/repo');
 }
 exports.validateRepository = validateRepository;
 function generateUpdateManifest(releases, addonId, assetFilter) {
@@ -9791,6 +9791,15 @@ class Validator {
      */
     static emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     _errors;
+    /**
+     * Creates a new validator.
+     *
+     * @example
+     * const validator = new Validator()
+     * const email = core.getInput('email') # e.g. 'john.doe@example.com'
+     * validator.check(Validator.emailRegex.test(email), 'email', 'Email is invalid')
+     * console.log(validator.isValid()) // true
+     */
     constructor() {
         this._errors = new Map();
     }
@@ -9828,7 +9837,7 @@ class Validator {
         }
     }
     /**
-     * Stores an error message if the isValid check is not valid.
+     * Stores an error message if isValid is false.
      * @param isValid - A boolean indicating if the check is valid.
      * @param key - The name of the input that caused the error.
      * @param message - The error message that's added if the check is not valid.
