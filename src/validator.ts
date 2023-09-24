@@ -17,6 +17,15 @@ export default class Validator {
 
   private _errors: Map<string, string>
 
+  /**
+   * Creates a new validator.
+   *
+   * @example
+   * const validator = new Validator()
+   * const email = core.getInput('email') // e.g. 'john.doe@example.com'
+   * validator.check(Validator.emailRegex.test(email), 'email', 'Email is invalid')
+   * console.log(validator.isValid()) // true
+   */
   constructor() {
     this._errors = new Map()
   }
@@ -59,10 +68,10 @@ export default class Validator {
   }
 
   /**
-   * Stores an error message if the isValid check is not valid.
+   * Stores an error message if isValid is false.
    * @param isValid - A boolean indicating if the check is valid.
    * @param key - The name of the input that caused the error.
-   * @param message - The error message that's added if the check is not valid.
+   * @param message - The error message.
    */
   check(isValid: boolean, key: string, message: string): void {
     if (!isValid) {
