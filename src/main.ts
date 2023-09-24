@@ -30,14 +30,14 @@ export async function run(): Promise<void> {
       throw new Error(validator.toJSON())
     }
 
-    core.info(`Fetching releases...`)
+    core.info('Fetching releases...')
     const [owner, repo] = repository.split('/')
     const releases = await client.request(
       'GET /repos/{owner}/{repo}/releases',
       { owner, repo }
     )
 
-    core.info(`Generating manifest...`)
+    core.info('Generating manifest...')
     const manifest = generateUpdateManifest(releases.data, addonID, assetFilter)
     const manifestString = JSON.stringify(manifest, null, 2)
 
@@ -62,7 +62,7 @@ export function validateAddonID(validator: Validator, addonId: string): void {
   validator.check(
     isValidEmail || isValidUuid,
     'addon-id',
-    `The addon ID is neither a valid e-mail nor a valid UUID`
+    'The addon ID is neither a valid e-mail nor a valid UUID'
   )
 }
 
@@ -73,7 +73,7 @@ export function validateRepository(
   validator.check(
     repository.split('/').length === 2,
     'repository',
-    `The repository must be in the format owner/repo`
+    'The repository must be in the format owner/repo'
   )
 }
 
