@@ -47,8 +47,8 @@ The path to the generated update manifest file. Equal to the input
 
 ## Example usage
 
-Make sure that you match only one asset with the `asset-filter` input. Otherwise
-the action will pick the first asset that matches the filter.
+**Note:** Make sure that you match only one asset with the `asset-filter` input.
+Otherwise the action will pick the first asset that matches the filter.
 
 ```yaml
 uses: 2zqa/generate-update-manifest@v1
