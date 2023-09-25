@@ -4,6 +4,7 @@ import * as fs from 'node:fs/promises'
 import GitHubRelease from './types/GitHubRelease'
 import UpdateManifest, { Update } from './types/UpdateManifest'
 import Validator from './validator'
+import { minimatch } from 'minimatch'
 
 /**
  * The main function for the action.
@@ -92,7 +93,7 @@ export function generateUpdateManifest(
     )
 
     if (assetFilter) {
-      assets = assets.filter(asset => asset.name.match(assetFilter) !== null)
+      assets = assets.filter(asset => minimatch(asset.name, assetFilter))
       core.debug(`Retained ${assets.length} assets after filtering`)
     }
 

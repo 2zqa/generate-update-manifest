@@ -34,6 +34,10 @@ GitHub token to retrieve releases with. Defaults to `${{ github.token }}`.
 The repository to retrieve releases from. Defaults to
 `${{ github.repository }}`. For example: `2zqa/startpagina`.
 
+### `asset-filter`
+
+A glob pattern to filter the assets by. For example: `*.xpi`.
+
 ## Outputs
 
 ### `manifest`

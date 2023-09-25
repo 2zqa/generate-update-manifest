@@ -55,7 +55,7 @@ describe('generateUpdateManifest', () => {
     const manifest = main.generateUpdateManifest(
       releases,
       addonIDRegex,
-      '\\.firefox\\.signed.*'
+      '*.firefox.signed.xpi'
     )
 
     expect(manifest).toEqual(expected)
