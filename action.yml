@@ -3,6 +3,9 @@ description:
   'GitHub action to generate update manifest files for self distributed Firefox
   addons'
 author: '2zqa'
+branding:
+  icon: align-left
+  color: blue
 
 inputs:
   addon-id:
