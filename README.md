@@ -5,8 +5,11 @@
 ![Code Coverage](./badges/coverage.svg)
 
 This action generates an update manifest file for self distributed Firefox
-addons. Recommended to be used with GitHub Pages or any other static file
-hoster.
+addons based on the releases. Recommended to be used with GitHub Pages or any
+other static file hoster.
+
+**Note:** This action only works on public repositories, as releases on private
+repositories are not publicly accessible.
 
 ## Inputs
 
