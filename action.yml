@@ -1,15 +1,28 @@
 name: 'Generate update manifest'
-description: 'GitHub action to generate update manifest files for self distributed Firefox addons'
+description:
+  'GitHub action to generate update manifest files for self distributed Firefox
+  addons'
 author: '2zqa'
 
 inputs:
   addon-id:
     description: 'The ID of the addon to generate the update manifest for'
     required: true
+  output-file:
+    description: 'Path to the file to write the update manifest to'
+    required: false
+    default: 'updates.json'
   github-token:
     description: 'The GitHub token used to retrieve releases'
     required: false
     default: ${{ github.token }}
+  repository:
+    description: 'The repository to retrieve releases from'
+    required: false
+    default: ${{ github.repository }}
+  asset-filter:
+    description: 'Regex pattern to filter release assets'
+    required: false
 
 outputs:
   manifest:

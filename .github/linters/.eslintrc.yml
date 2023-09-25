@@ -26,6 +26,7 @@ parserOptions:
 plugins:
   - jest
   - '@typescript-eslint'
+  - 'filenames'
 
 extends:
   - eslint:recommended
@@ -34,8 +35,12 @@ extends:
   - plugin:github/recommended
   - plugin:jest/recommended
 
-rules:
-  {
+rules: {
+    # Own rules
+    'filenames/match-regex': ['error', '^[a-zA-Z]+(?:\.test)?$', false],
+    'filenames/match-exported': ['error', ['camel', 'pascal'], null, true],
+
+    # Template rules
     'camelcase': 'off',
     'eslint-comments/no-use': 'off',
     'eslint-comments/no-unused-disable': 'off',
