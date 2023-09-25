@@ -29,6 +29,11 @@ The path to the generated update manifest file. Defaults to `./updates.json`.
 
 GitHub token to retrieve releases with. Defaults to `${{ github.token }}`.
 
+### `repository`
+
+The repository to retrieve releases from. Defaults to
+`${{ github.repository }}`. For example: `2zqa/startpagina`.
+
 ## Outputs
 
 ### `manifest`
