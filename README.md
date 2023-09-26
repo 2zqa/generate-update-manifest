@@ -65,5 +65,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 - How to enable and test updates for your extension:
   https://extensionworkshop.com/documentation/manage/updating-your-extension/
-- Example GitHub template repository that uses this action:
-  https://github.com/2zqa/startpagina
+- Example addon that uses this action:
+  https://github.com/2zqa/startpagina-private
