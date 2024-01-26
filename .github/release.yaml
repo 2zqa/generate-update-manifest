@@ -1,0 +1,17 @@
+changelog:
+  categories:
+    - title: Added
+      labels:
+        - enhancement
+    - title: Changed
+      labels:
+        - bug
+        - documentation
+    - title: Dependency updates
+      labels:
+        - dependabot
+        - actions
+        - npm
+    - title: Other
+      labels:
+        - "*"
