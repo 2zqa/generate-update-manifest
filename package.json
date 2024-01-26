@@ -1,7 +1,7 @@
 {
   "name": "generate-update-manifest",
   "description": "GitHub action to generate update manifest files for self distributed Firefox addons",
-  "version": "0.0.1",
+  "version": "1.1",
   "author": "2zqa",
   "private": true,
   "homepage": "https://github.com/2zqa/generate-update-manifest",
