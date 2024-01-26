@@ -61,6 +61,10 @@ with:
 
 This project is licensed under the [MIT License](LICENSE).
 
+## Versioning
+
+For information about versioning and the development workflow used, see [Versioning](https://github.com/actions/toolkit/blob/main/docs/action-versioning.md) in the GitHub Actions toolkit.
+
 ## Further reading
 
 - How to enable and test updates for your extension:
