@@ -1,6 +1,6 @@
 # Generate Update Manifest Action
 
-[![GitHub Super-Linter](https://github.com/2zqa/generate-update-manifest/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
+[![Lint Codebase](https://github.com/2zqa/generate-update-manifest/actions/workflows/linter.yml/badge.svg)](https://github.com/2zqa/generate-update-manifest/actions/workflows/ci.yml)
 [![Continuous Integration](https://github.com/2zqa/generate-update-manifest/actions/workflows/ci.yml/badge.svg)](https://github.com/2zqa/generate-update-manifest/actions/workflows/ci.yml)
 ![Code Coverage](./badges/coverage.svg)
 
@@ -60,6 +60,13 @@ with:
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Contributing
+
+This project welcomes contributions and suggestions. Please open an issue or
+create a pull request to contribute.
+
+This project follows the [Action Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) workflow.
 
 ## Further reading
 
